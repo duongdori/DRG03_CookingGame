@@ -9,20 +9,34 @@ namespace Customers
         {
         }
 
-        public override void LogicUpdate()
+        public override void Enter()
         {
-            base.LogicUpdate();
+            base.Enter();
+            customer.aiPath.enabled = false;
+            customer.transform.position = customer.targetChair.sitPoint.position;
+            customer.transform.localScale = customer.targetChair.sitPoint.localScale;
+            customer.normalModel.SetActive(false);
+            customer.sitModel.SetActive(true);
+            
+            customer.targetTable.OnTableStatusChanged += TargetTableOnOnTableStatusChanged;
+        }
 
-            if (customer.targetChair != null && customer.targetTable.TableStatus == TableStatus.FoodServed)
+        private void TargetTableOnOnTableStatusChanged(Table table, TableStatus status)
+        {
+            if(customer.targetChair == null) return;
+            if(customer.targetTable != table) return;
+
+            if (status == TableStatus.FoodServed)
             {
                 stateMachine.ChangeState(customer.EatingState);
             }
-            else if (customer.targetChair != null && customer.targetTable.TableStatus == TableStatus.Empty)
+            else if (status == TableStatus.Empty)
             {
                 customer.targetChair.SetChairStatus(ChairStatus.Empty);
                 customer.targetChair = null;
                 customer.targetTable = null;
                 customer.targetTransform = Door.Instance.transform;
+                customer.aiPath.enabled = true;
                 stateMachine.ChangeState(customer.IdleState);
             }
         }

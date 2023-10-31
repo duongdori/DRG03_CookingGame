@@ -8,6 +8,13 @@ namespace Customers
         {
         }
 
+        public override void Enter()
+        {
+            base.Enter();
+            customer.sitModel.SetActive(false);
+            customer.normalModel.SetActive(true);
+        }
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();
@@ -15,6 +22,10 @@ namespace Customers
             if (customer.targetTransform != null)
             {
                 stateMachine.ChangeState(customer.MoveState);
+            }
+            else
+            {
+                customer.customerHolder.ReturnCustomerToPool(customer.gameObject);
             }
         }
     }

@@ -6,17 +6,17 @@ namespace ObjectPooling
 {
     public class ObjectPool : MonoBehaviour
     {
-        [SerializeField] private GameObject objectPrefab;
+        [SerializeField] private List<GameObject> objectPrefabs;
         [SerializeField] private int poolSize;
         [SerializeField] private List<GameObject> freeObjects = new();
         [SerializeField] private List<GameObject> usedObjects = new();
 
         private void Awake()
         {
-            // for (int i = 0; i < poolSize; i++)
-            // {
-            //     GenerateNewObject();
-            // }
+            for (int i = 0; i < poolSize; i++)
+            {
+                GenerateNewObject();
+            }
         }
 
         public GameObject GetObjectFromPool()
@@ -43,7 +43,9 @@ namespace ObjectPooling
 
         private GameObject GenerateNewObject()
         {
-            GameObject newObject = Instantiate(objectPrefab, transform);
+            int randomNum = Random.Range(0, objectPrefabs.Count);
+            
+            GameObject newObject = Instantiate(objectPrefabs[randomNum], transform);
             newObject.SetActive(false);
             freeObjects.Add(newObject);
 

@@ -7,7 +7,6 @@ namespace Customers
     public class CustomerHolder : MonoBehaviour
     {
         [SerializeField] private ObjectPool objectPool;
-
         public bool test = false;
         public int number = 0;
 
@@ -21,7 +20,7 @@ namespace Customers
             if (Input.GetKeyDown(KeyCode.F))
             {
                 test = true;
-                number = Random.Range(1, 5);
+                number = Random.Range(1, 3);
             }
 
             if (test)
@@ -56,10 +55,15 @@ namespace Customers
             GameObject obj = objectPool.GetObjectFromPool();
             if(obj == null) return null;
             if (!obj.TryGetComponent(out CustomerBehaviour customer)) return null;
-            obj.transform.position = Door.Instance.transform.position;
+            obj.transform.position = Door.Instance.transform.position + new Vector3(Random.Range(-2f, 2f), 0f, 0f);
             obj.transform.rotation = Quaternion.identity;
 
             return customer;
+        }
+
+        public void ReturnCustomerToPool(GameObject obj)
+        {
+            objectPool.ReturnObjectToPool(obj);
         }
     }
 }

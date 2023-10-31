@@ -32,5 +32,15 @@ namespace TableAndChair
 
             return tempChairs.All(c => c.ChairStatus == ChairStatus.Occupied);
         }
+
+        public int GetNumberOfChairsOccupied()
+        {
+            return chairs.Count(c => c.ChairStatus == ChairStatus.Occupied);
+        }
+
+        public List<Chair> GetChairsOccupied()
+        {
+            return chairs.Where(c => c.ChairStatus == ChairStatus.Occupied).ToList();
+        }
     }
 }

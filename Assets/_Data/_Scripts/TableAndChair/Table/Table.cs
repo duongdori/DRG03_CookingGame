@@ -1,5 +1,6 @@
+using Kitchen;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 namespace TableAndChair
 {
@@ -24,11 +25,15 @@ namespace TableAndChair
         [SerializeField] private Transform staffPoint;
         public Transform StaffPoint => staffPoint;
 
-        public bool statusChanged = false;
+        public Transform assistantChefPoint;
 
+        public FoodTray foodTray;
+        
         public bool hasStaff = false;
 
         public float time = 0f;
+
+        public event UnityAction<Table, TableStatus> OnTableStatusChanged; 
         private void Awake()
         {
             chairManager = GetComponentInChildren<ChairManager>();
@@ -36,43 +41,39 @@ namespace TableAndChair
 
         private void Update()
         {
-            if (chairManager.AreAllCustomersSeated() && !statusChanged)
+            if (chairManager.AreAllCustomersSeated() && tableStatus == TableStatus.Reserved)
             {
-                statusChanged = true;
-                tableStatus = TableStatus.WaitingForOrder;
+                SetTableStatus(TableStatus.WaitingForOrder);
             }
-
-            if (tableStatus == TableStatus.Occupied)
+            else if (tableStatus == TableStatus.FoodServed)
             {
-                if (time > 3f)
+                if (time > 5f)
                 {
                     time = 0f;
-                    tableStatus = TableStatus.FoodServed;
+                    SetTableStatus(TableStatus.PaymentRequested);
                 }
 
                 time += Time.deltaTime;
             }
-
-            if (tableStatus == TableStatus.FoodServed)
-            {
-                if (time > 3f)
-                {
-                    time = 0f;
-                    tableStatus = TableStatus.PaymentRequested;
-                }
-
-                time += Time.deltaTime;
-            }
+            
         }
 
         public void SetTableStatus(TableStatus status)
         {
             tableStatus = status;
+            OnTableStatusChanged?.Invoke(this, tableStatus);
         }
 
         public void SetHasStaff(bool value)
         {
             hasStaff = value;
+        }
+
+        public void DestroyFoodTray()
+        {
+            if(foodTray == null) return;
+            Destroy(foodTray.gameObject);
+            foodTray = null;
         }
     }
 }

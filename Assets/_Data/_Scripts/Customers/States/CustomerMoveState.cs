@@ -18,6 +18,19 @@ namespace Customers
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+            if (customer.aiPath.velocity.x < 0)
+            {
+                Vector3 newScale = customer.transform.localScale;
+                newScale.x = Mathf.Abs(newScale.x) * -1;
+                customer.transform.localScale = newScale;
+            }
+            else
+            {
+                Vector3 newScale = customer.transform.localScale;
+                newScale.x = Mathf.Abs(newScale.x);
+                customer.transform.localScale = newScale;
+            }
+            
             if (customer.aiPath.reachedDestination && customer.targetChair != null)
             {
                 customer.targetChair.SetChairStatus(ChairStatus.Occupied);

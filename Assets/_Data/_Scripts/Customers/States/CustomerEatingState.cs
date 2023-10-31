@@ -9,11 +9,18 @@ namespace Customers
         {
         }
 
-        public override void LogicUpdate()
+        public override void Enter()
         {
-            base.LogicUpdate();
+            base.Enter();
+            customer.targetTable.OnTableStatusChanged += TargetTableOnOnTableStatusChanged;
+        }
 
-            if (customer.targetChair != null && customer.targetTable.TableStatus == TableStatus.PaymentRequested)
+        private void TargetTableOnOnTableStatusChanged(Table table, TableStatus status)
+        {
+            if(customer.targetChair == null) return;
+            if(customer.targetTable != table) return;
+            
+            if (status == TableStatus.PaymentRequested)
             {
                 stateMachine.ChangeState(customer.SittingState);
             }

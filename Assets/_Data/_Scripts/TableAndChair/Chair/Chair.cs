@@ -12,6 +12,8 @@ namespace TableAndChair
     {
         [SerializeField] private ChairStatus chairStatus = ChairStatus.Empty;
         public ChairStatus ChairStatus => chairStatus;
+
+        public Transform sitPoint;
         
         public void SetChairStatus(ChairStatus status)
         {
