@@ -23,10 +23,13 @@ namespace Customers
 
         private void TargetTableOnOnTableStatusChanged(Table table, TableStatus status)
         {
-            if(customer.targetChair == null) return;
             if(customer.targetTable != table) return;
 
-            if (status == TableStatus.FoodServed)
+            if (status == TableStatus.Ordering)
+            {
+                stateMachine.ChangeState(customer.OrderingState);
+            }
+            else if (status == TableStatus.FoodServed)
             {
                 stateMachine.ChangeState(customer.EatingState);
             }

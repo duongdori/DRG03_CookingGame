@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a856474ec4f2bc84c8c270f1eb20225f, type: 3}
+  m_Name: ComTam
+  m_EditorClassIdentifier: 
+  id: 2
+  name: Com Tam
+  sprite: {fileID: 21300000, guid: 654a8297354ca5441863a3bac05e3159, type: 3}
+  prefab: {fileID: 96618327192189548, guid: 92f5806713523494bac81b54861b13f7, type: 3}
+  preparationTime: 6
+  price: 30

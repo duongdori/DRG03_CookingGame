@@ -24,11 +24,9 @@ namespace AssistantChefs
                 assistantChef.modelHasFood.SetActive(false);
                 assistantChef.modelNoFood.SetActive(true);
                 
-                assistantChef.foodTray.gameObject.SetActive(true);
-                assistantChef.foodTray.transform.SetParent(assistantChef.foodTray.targetTable.transform);
-                assistantChef.foodTray.transform.localPosition = Vector3.zero;
                 assistantChef.targetTable.foodTray = assistantChef.foodTray;
-                assistantChef.foodTray.targetTable.SetTableStatus(TableStatus.FoodServed);
+                assistantChef.targetTable.SetupFood();
+                assistantChef.targetTable.SetTableStatus(TableStatus.FoodServed);
                 assistantChef.foodTray = null;
                 assistantChef.targetTransform = assistantChef.idlePoint;
                 stateMachine.ChangeState(assistantChef.IdleState);
@@ -39,7 +37,7 @@ namespace AssistantChefs
                 assistantChef.modelNoFood.SetActive(false);
                 
                 assistantChef.targetTransform = null;
-                assistantChef.isFree = true;
+                assistantChef.SetIsFree(true);
                 stateMachine.ChangeState(assistantChef.IdleState);
             }
         }

@@ -17,7 +17,6 @@ namespace Customers
 
         private void TargetTableOnOnTableStatusChanged(Table table, TableStatus status)
         {
-            if(customer.targetChair == null) return;
             if(customer.targetTable != table) return;
             
             if (status == TableStatus.PaymentRequested)

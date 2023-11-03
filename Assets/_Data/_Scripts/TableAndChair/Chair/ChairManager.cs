@@ -18,6 +18,11 @@ namespace TableAndChair
                 chairs.Add(chair);
             }
         }
+
+        public bool IsEmptyChairs()
+        {
+            return chairs.All(c => c.IsEmpty());
+        }
         
         public Chair GetEmptyChair()
         {

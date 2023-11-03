@@ -8,7 +8,8 @@ namespace TableAndChair
     {
         Empty,
         Reserved,
-        WaitingForOrder,
+        PendingToOrder,
+        Ordering,
         Occupied,
         FoodServed,
         PaymentRequested,
@@ -27,23 +28,28 @@ namespace TableAndChair
 
         public Transform assistantChefPoint;
 
+        public Cook cook;
         public FoodTray foodTray;
+        public FoodHolder foodHolder;
         
         public bool hasStaff = false;
+        public bool staffArrived = false;
 
         public float time = 0f;
 
-        public event UnityAction<Table, TableStatus> OnTableStatusChanged; 
+        public event UnityAction<Table, TableStatus> OnTableStatusChanged;
+        public event UnityAction<bool> OnStaffArrived;
         private void Awake()
         {
             chairManager = GetComponentInChildren<ChairManager>();
+            foodHolder = GetComponentInChildren<FoodHolder>();
         }
 
         private void Update()
         {
             if (chairManager.AreAllCustomersSeated() && tableStatus == TableStatus.Reserved)
             {
-                SetTableStatus(TableStatus.WaitingForOrder);
+                SetTableStatus(TableStatus.PendingToOrder);
             }
             else if (tableStatus == TableStatus.FoodServed)
             {
@@ -58,6 +64,21 @@ namespace TableAndChair
             
         }
 
+        public bool IsEmptyTable()
+        {
+            return tableStatus == TableStatus.Empty && chairManager.IsEmptyChairs();
+        }
+
+        public bool IsPendingToOrder()
+        {
+            return tableStatus == TableStatus.PendingToOrder && !hasStaff;
+        }
+        
+        public bool IsPaymentRequested()
+        {
+            return tableStatus == TableStatus.PaymentRequested && !hasStaff;
+        }
+
         public void SetTableStatus(TableStatus status)
         {
             tableStatus = status;
@@ -68,12 +89,44 @@ namespace TableAndChair
         {
             hasStaff = value;
         }
+        
+        public void SetStaffArrived(bool value)
+        {
+            staffArrived = value;
+            OnStaffArrived?.Invoke(value);
+        }
+
+        public void SetCook(Cook cook)
+        {
+            this.cook = cook;
+        }
+
+        public void AddFood(FoodData foodData)
+        {
+            cook.AddFood(foodData);
+        }
 
         public void DestroyFoodTray()
         {
-            if(foodTray == null) return;
-            Destroy(foodTray.gameObject);
             foodTray = null;
+        }
+
+        public void SetupFood()
+        {
+            if(foodTray == null) return;
+
+            for (int i = 0; i < foodTray.foodList.Count; i++)
+            {
+                foodHolder.holder[i].Setup(foodTray.foodList[i].sprite, foodTray.foodList[i].name);
+            }
+        }
+
+        public void RemoveFood()
+        {
+            foreach (Food food in foodHolder.holder)
+            {
+                food.Setup(null, "FoodPoint");
+            }
         }
     }
 }

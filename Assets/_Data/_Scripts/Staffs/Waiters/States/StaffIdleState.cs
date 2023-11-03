@@ -13,7 +13,7 @@ namespace Staffs
             base.LogicUpdate();
             if (staff.targetTransform != null)
             {
-                staff.isFree = false;
+                staff.SetIsFree(false);
                 stateMachine.ChangeState(staff.MoveState);
             }
         }

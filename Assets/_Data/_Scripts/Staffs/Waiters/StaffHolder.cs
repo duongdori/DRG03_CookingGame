@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TableAndChair;
@@ -6,59 +5,53 @@ using UnityEngine;
 
 namespace Staffs
 {
-    public class StaffHolder : MonoBehaviour
+    public class StaffHolder : MyMonobehaviour
     {
         [SerializeField] private List<StaffBehaviour> staffs = new();
 
-        private void Awake()
+        protected override void LoadComponents()
         {
-            if(transform.childCount <= 0) return;
-            staffs.Clear();
-            foreach (Transform child in transform)
-            {
-                if (!child.TryGetComponent(out StaffBehaviour staff)) continue;
-                staffs.Add(staff);
-            }
+            base.LoadComponents();
+            LoadStaffs();
         }
 
         private void Update()
         {
-            SetTablePendingOrderToStaff();
+            SetTableToFreeStaff(TableManager.Instance.GetTableWithPendingOrder());
+            SetTableToFreeStaff(TableManager.Instance.GetTablePaymentRequested());
+        }
+
+        private void SetTableToFreeStaff(Table table)
+        {
+            if(table == null) return;
             
-            SetTablePaymentRequestedToStaff();
-        }
-
-        private void SetTablePendingOrderToStaff()
-        {
-            Table table = TableManager.Instance.GetTableWithPendingOrder();
-            if(table == null) return;
-
-            StaffBehaviour staff = GetFreeStaff();
-            if(staff == null) return;
-
-            table.SetHasStaff(true);
-            staff.targetTable = table;
-            staff.targetTransform = table.StaffPoint;
-        }
-
-        private void SetTablePaymentRequestedToStaff()
-        {
-            Table table = TableManager.Instance.GetTablePaymentRequested();
-            if(table == null) return;
-
             StaffBehaviour staff = GetFreeStaff();
             if(staff == null) return;
             
-            table.SetHasStaff(true);
             staff.targetTable = table;
             staff.targetTransform = table.StaffPoint;
+            table.SetHasStaff(true);
         }
 
         private StaffBehaviour GetFreeStaff()
         {
             if (staffs.Count == 0) return null;
             
-            return staffs.FirstOrDefault(s => s.StateMachine.CurrentState == s.IdleState && s.isFree);
+            return staffs.FirstOrDefault(s => s.IsFreeStaff());
+        }
+
+        private void LoadStaffs()
+        {
+            if(staffs.Count > 0 || transform.childCount == 0) return;
+            
+            staffs.Clear();
+            foreach (Transform child in transform)
+            {
+                if (!child.TryGetComponent(out StaffBehaviour staff)) continue;
+                staffs.Add(staff);
+            }
+            
+            Debug.LogWarning(transform.name + ": LoadStaffs", gameObject);
         }
     }
 }

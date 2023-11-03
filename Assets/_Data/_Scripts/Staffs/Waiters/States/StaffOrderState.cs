@@ -13,16 +13,14 @@ namespace Staffs
         public override void Enter()
         {
             base.Enter();
-            
             Cook cook = KitchenManager.Instance.CreateCook();
             if(cook == null) return;
             
             cook.SetTargetTable(staff.targetTable);
-            foreach (Chair chair in staff.targetTable.ChairManager.GetChairsOccupied())
-            {
-                FoodData foodData = MenuManager.Instance.GetRandomFoodFromMenu();
-                cook.AddFood(foodData);
-            }
+            staff.targetTable.SetCook(cook);
+            
+            staff.targetTable.SetStaffArrived(true);
+            staff.targetTable.SetTableStatus(TableStatus.Ordering);
         }
 
         public override void LogicUpdate()
@@ -38,6 +36,8 @@ namespace Staffs
         public override void Exit()
         {
             base.Exit();
+            staff.targetTable.SetStaffArrived(false);
+            staff.targetTable.cook = null;
             staff.targetTable.SetTableStatus(TableStatus.Occupied);
             staff.targetTable.SetHasStaff(false);
             staff.targetTable = null;

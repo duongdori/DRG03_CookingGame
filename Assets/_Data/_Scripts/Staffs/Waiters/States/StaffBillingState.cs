@@ -25,6 +25,7 @@ namespace Staffs
             staff.targetTable.SetTableStatus(TableStatus.Empty);
             GameManager.Instance.AddMoney(staff.targetTable.foodTray.GetPrice());
             staff.targetTable.DestroyFoodTray();
+            staff.targetTable.RemoveFood();
             staff.targetTable.SetHasStaff(false);
             staff.targetTable = null;
         }

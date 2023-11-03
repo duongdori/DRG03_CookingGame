@@ -7,25 +7,17 @@ namespace Kitchen
 {
     public class Cook : MonoBehaviour
     {
-        public FoodTray foodTrayPrefab;
         public Transform kitchenPoint;
         public Table targetTable;
         public float time = 0f;
         public bool isDone = false;
-        public List<FoodData> foodList = new();
-        public List<FoodData> cookedList = new();
+        public List<FoodData> foodList;
+        public List<FoodData> cookedList;
 
         private void OnEnable()
         {
-            cookedList.Clear();
-        }
-
-        private void OnDisable()
-        {
-            targetTable = null;
-            time = 0f;
-            isDone = false;
-            foodList.Clear();
+            foodList = new List<FoodData>();
+            cookedList = new List<FoodData>();
         }
 
         private void Update()
@@ -38,19 +30,26 @@ namespace Kitchen
             }
             else if (foodList.Count == 0 && cookedList.Count > 0 && !isDone)
             {
-                FoodTray foodTray = Instantiate(foodTrayPrefab, kitchenPoint.position, Quaternion.identity);
-                foodTray.targetTable = targetTable;
-                foodTray.foodList = cookedList;
+                FoodTray foodTray = new FoodTray(targetTable, cookedList);
+                
                 KitchenManager.Instance.AddFoodTrayList(foodTray);
                 isDone = true;
-                KitchenManager.Instance.ReturnToPool(gameObject);
+                ReturnToPool();
             }
+        }
+
+        private void ReturnToPool()
+        {
+            targetTable = null;
+            time = 0f;
+            isDone = false;
+            KitchenManager.Instance.ReturnToPool(gameObject);
         }
 
         private void Cooking(FoodData food)
         {
             time += Time.deltaTime;
-            if (time >= food.preparationTime)
+            if (time > food.preparationTime)
             {
                 time = 0f;
                 cookedList.Add(food);

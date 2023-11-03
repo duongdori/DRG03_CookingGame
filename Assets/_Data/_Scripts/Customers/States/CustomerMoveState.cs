@@ -18,6 +18,29 @@ namespace Customers
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+            
+            HandleFlip();
+            
+            if (customer.aiPath.reachedDestination && customer.targetChair != null)
+            {
+                customer.targetChair.SetChairStatus(ChairStatus.Occupied);
+                stateMachine.ChangeState(customer.SittingState);
+            }
+            else if (customer.aiPath.reachedDestination && customer.targetChair == null)
+            {
+                stateMachine.ChangeState(customer.IdleState);
+            }
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            customer.aiDestinationSetter.target = null;
+            customer.targetTransform = null;
+        }
+
+        private void HandleFlip()
+        {
             if (customer.aiPath.velocity.x < 0)
             {
                 Vector3 newScale = customer.transform.localScale;
@@ -30,24 +53,6 @@ namespace Customers
                 newScale.x = Mathf.Abs(newScale.x);
                 customer.transform.localScale = newScale;
             }
-            
-            if (customer.aiPath.reachedDestination && customer.targetChair != null)
-            {
-                customer.targetChair.SetChairStatus(ChairStatus.Occupied);
-                stateMachine.ChangeState(customer.SittingState);
-            }
-
-            if (customer.aiPath.reachedDestination && customer.targetChair == null)
-            {
-                stateMachine.ChangeState(customer.IdleState);
-            }
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-            customer.aiDestinationSetter.target = null;
-            customer.targetTransform = null;
         }
     }
 }

@@ -19,5 +19,10 @@ namespace TableAndChair
         {
             chairStatus = status;
         }
+
+        public bool IsEmpty()
+        {
+            return chairStatus == ChairStatus.Empty;
+        }
     }
 }

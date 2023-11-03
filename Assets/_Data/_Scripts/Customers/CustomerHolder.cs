@@ -17,16 +17,22 @@ namespace Customers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                test = true;
-                number = Random.Range(1, 3);
-            }
+            // if (Input.GetKeyDown(KeyCode.F))
+            // {
+            //     test = true;
+            //     number = Random.Range(1, 3);
+            // }
+            //
+            // if (test)
+            // {
+            //     SetEmptyTableToCustomer();
+            // }
+        }
 
-            if (test)
-            {
-                SetEmptyTableToCustomer();
-            }
+        public void Test()
+        {
+            number = Random.Range(1, 3);
+            SetEmptyTableToCustomer();
         }
 
         private void SetEmptyTableToCustomer()
@@ -37,9 +43,8 @@ namespace Customers
             for (int i = 0; i < number; i++)
             {
                 CustomerBehaviour customer = SpawnCustomer();
-                if(customer == null) return;
                 Chair chair = table.ChairManager.GetEmptyChair();
-                if(chair == null) return;
+                if(customer == null || chair == null) return;
 
                 customer.targetChair = chair;
                 customer.targetTable = table;

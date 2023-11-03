@@ -14,7 +14,7 @@ namespace AssistantChefs
 
             if (assistantChef.targetTransform != null)
             {
-                assistantChef.isFree = false;
+                assistantChef.SetIsFree(false);
                 stateMachine.ChangeState(assistantChef.MoveState);
             }
         }

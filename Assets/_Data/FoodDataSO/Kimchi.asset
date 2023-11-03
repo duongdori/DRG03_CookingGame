@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a856474ec4f2bc84c8c270f1eb20225f, type: 3}
   m_Name: Kimchi
   m_EditorClassIdentifier: 
-  id: 2
+  id: 5
   name: Kimchi
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 9b85ba33babb49d4581826390bebefbe, type: 3}
+  prefab: {fileID: 1440917358464395344, guid: fc7cf488bfa9d6e4abad77bc43f1778f, type: 3}
   preparationTime: 4
-  price: 5
+  price: 6

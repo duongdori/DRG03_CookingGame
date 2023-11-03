@@ -63,6 +63,15 @@ namespace AssistantChefs
             StateMachine.CurrentState.PhysicsUpdate();
         }
         
+        public bool IsFreeAssistantChef()
+        {
+            return StateMachine.CurrentState == IdleState && isFree;
+        }
+        public void SetIsFree(bool value)
+        {
+            isFree = value;
+        }
+        
         private void LoadModelHasFood()
         {
             if(modelHasFood != null) return;

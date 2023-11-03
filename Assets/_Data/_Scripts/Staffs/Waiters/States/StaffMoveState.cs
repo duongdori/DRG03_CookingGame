@@ -23,7 +23,7 @@ namespace Staffs
             base.LogicUpdate();
 
             if (staff.aiPath.reachedDestination && staff.targetTable != null 
-                                                && staff.targetTable.TableStatus == TableStatus.WaitingForOrder)
+                                                && staff.targetTable.TableStatus == TableStatus.PendingToOrder)
             {
                 stateMachine.ChangeState(staff.OrderState);
             }
@@ -34,7 +34,7 @@ namespace Staffs
             }
             else if (staff.aiPath.reachedDestination && staff.targetTable == null)
             {
-                staff.isFree = true;
+                staff.SetIsFree(true);
                 stateMachine.ChangeState(staff.IdleState);
             }
         }

@@ -13,7 +13,6 @@ public class MenuManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
     }
-
     public FoodData GetRandomFoodFromMenu()
     {
         if (menu.Count <= 0) return null;

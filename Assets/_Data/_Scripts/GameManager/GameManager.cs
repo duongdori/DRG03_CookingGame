@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private int money;
 
+    public event UnityAction<int> OnMoneyChanged; 
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -15,5 +16,12 @@ public class GameManager : MonoBehaviour
     public void AddMoney(int value)
     {
         money += value;
+        OnMoneyChanged?.Invoke(money);
+    }
+
+    public void DeductMoney(int value)
+    {
+        money -= value;
+        OnMoneyChanged?.Invoke(money);
     }
 }

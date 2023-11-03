@@ -10,14 +10,16 @@ namespace Staffs
         public AIPath aiPath;
         public AIDestinationSetter aiDestinationSetter;
         
-        public Transform targetTransform;
+        [Header("Target")]
         public Transform idlePoint;
+        public Transform targetTransform;
         public Table targetTable;
         
+        [Header("Models")]
         public GameObject modelIdle;
         public GameObject modelMove;
 
-        public bool isFree = true;
+        [SerializeField] private bool isFree = true;
         
         public StateMachine StateMachine { get; private set; }
         public StaffIdleState IdleState { get; private set; }
@@ -28,11 +30,6 @@ namespace Staffs
         protected override void Awake()
         {
             base.Awake();
-            
-            anim = GetComponentInChildren<Animator>();
-            aiPath = GetComponent<AIPath>();
-            aiDestinationSetter = GetComponent<AIDestinationSetter>();
-
             StateMachine = new StateMachine();
             IdleState = new StaffIdleState(StateMachine, "Idle", this);
             MoveState = new StaffMoveState(StateMachine, "Move", this);
@@ -51,6 +48,9 @@ namespace Staffs
         protected override void LoadComponents()
         {
             base.LoadComponents();
+            LoadAnimator();
+            LoadAIPath();
+            LoadAIDestinationSetter();
             LoadModelIdle();
             LoadModelMove();
         }
@@ -63,6 +63,36 @@ namespace Staffs
         private void FixedUpdate()
         {
             StateMachine.CurrentState.PhysicsUpdate();
+        }
+
+        public bool IsFreeStaff()
+        {
+            return StateMachine.CurrentState == IdleState && isFree;
+        }
+
+        public void SetIsFree(bool value)
+        {
+            isFree = value;
+        }
+
+        #region LoadComponents
+        private void LoadAnimator()
+        {
+            if(anim != null) return;
+            anim = GetComponentInChildren<Animator>();
+            Debug.LogWarning(transform.name + ": LoadAnimator", gameObject);
+        }
+        private void LoadAIPath()
+        {
+            if(aiPath != null) return;
+            aiPath = GetComponent<AIPath>();
+            Debug.LogWarning(transform.name + ": LoadAIPath", gameObject);
+        }
+        private void LoadAIDestinationSetter()
+        {
+            if(aiDestinationSetter != null) return;
+            aiDestinationSetter = GetComponent<AIDestinationSetter>();
+            Debug.LogWarning(transform.name + ": LoadAIDestinationSetter", gameObject);
         }
         
         private void LoadModelIdle()
@@ -78,5 +108,8 @@ namespace Staffs
             modelMove.SetActive(false);
             Debug.LogWarning(transform.name + ": LoadModelMove", gameObject);
         }
+
+        #endregion
+        
     }
 }
