@@ -14,6 +14,7 @@ namespace AssistantChefs
         public override void Enter()
         {
             base.Enter();
+            Debug.Log(animBoolName);
             // assistantChef.anim.SetBool(animBoolName, true);
         }
 

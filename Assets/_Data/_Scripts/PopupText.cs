@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PopupText : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer backgroundSpriteRenderer;
+    // [SerializeField] private SpriteRenderer backgroundSpriteRenderer;
     [SerializeField] private TextMeshPro textMesh;
 
     private void Awake()
     {
-        backgroundSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        // backgroundSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         textMesh = GetComponentInChildren<TextMeshPro>();
     }
 
@@ -18,6 +18,10 @@ public class PopupText : MonoBehaviour
         if (transform.parent.localScale.x == -1)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
         }
         textMesh.SetText(text);
     }

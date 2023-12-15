@@ -12,10 +12,10 @@ namespace Kitchen
         public Table targetTable;
         public List<FoodData> foodList;
 
-        public FoodTray(Table table, List<FoodData> foods)
+        public FoodTray(Table table)
         {
             targetTable = table;
-            foodList = foods;
+            foodList = new List<FoodData>();
         }
         public int GetPrice()
         {

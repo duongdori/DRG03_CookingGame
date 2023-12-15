@@ -12,6 +12,11 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+
+        if (ES3.FileExists(ES3Settings.defaultSettings.path))
+        {
+            menu = ES3.Load("MenuFoodList", menu);
+        }
     }
     public FoodData GetRandomFoodFromMenu()
     {
@@ -30,5 +35,10 @@ public class MenuManager : MonoBehaviour
     {
         if(!menu.Contains(foodData)) return;
         menu.Remove(foodData);
+    }
+
+    public void Save()
+    {
+        ES3.Save("MenuFoodList", menu);
     }
 }

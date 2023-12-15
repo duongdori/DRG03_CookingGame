@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ObjectPooling;
 using UnityEngine;
@@ -8,7 +9,8 @@ namespace Kitchen
     {
         public static KitchenManager Instance { get; private set; }
 
-        [SerializeField] private ObjectPool objectPool;
+        [SerializeField] private List<Cook> cookPrefabs;
+        [SerializeField] private ObjectPool<Cook> objectPool;
         
         public Transform kitchenPoint;
         [SerializeField] private List<FoodTray> foodTrayList = new();
@@ -17,16 +19,16 @@ namespace Kitchen
         {
             if (Instance == null) Instance = this;
 
-            objectPool = GetComponent<ObjectPool>();
+            objectPool = new ObjectPool<Cook>(cookPrefabs, 5, transform);
+            objectPool.Setup();
         }
 
         public Cook CreateCook()
         {
-            GameObject cookObj = objectPool.GetObjectFromPool();
-            Cook cook = cookObj.GetComponent<Cook>();
+            Cook cook = objectPool.GetObjectFromPool();
             if (cook == null) return null;
             
-            cook.kitchenPoint = kitchenPoint;
+            cook.SetupCook();
             return cook;
         }
 
@@ -48,7 +50,7 @@ namespace Kitchen
             foodTrayList.RemoveAt(0);
         }
 
-        public void ReturnToPool(GameObject obj)
+        public void ReturnToPool(Cook obj)
         {
             objectPool.ReturnObjectToPool(obj);
         }

@@ -24,6 +24,7 @@ namespace AssistantChefs
         public StateMachine StateMachine { get; private set; }
         public AssistantChefIdleState IdleState { get; private set; }
         public AssistantChefMoveState MoveState { get; private set; }
+        public AssistantChefDeliveryState DeliveryState { get; private set; }
         
         protected override void Awake()
         {
@@ -36,6 +37,7 @@ namespace AssistantChefs
             StateMachine = new StateMachine();
             IdleState = new AssistantChefIdleState(StateMachine, "Idle", this);
             MoveState = new AssistantChefMoveState(StateMachine, "Move", this);
+            DeliveryState = new AssistantChefDeliveryState(StateMachine, "Delivery", this);
         }
         
         protected override void Start()

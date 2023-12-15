@@ -22,7 +22,7 @@ public class BaseState
         startTime = Time.time;
         isAnimationFinished = false;
         isExitingState = false;
-        Debug.Log(animBoolName);
+        //Debug.Log(animBoolName);
     }
 
     public virtual void Exit()

@@ -1,6 +1,8 @@
+using System;
 using Kitchen;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace TableAndChair
 {
@@ -28,6 +30,11 @@ namespace TableAndChair
 
         public Transform assistantChefPoint;
 
+        public GameObject orderIcon;
+        public GameObject moneyIcon;
+        public SpriteRenderer spriteRenderer;
+
+        public GameObject kimchi;
         public Cook cook;
         public FoodTray foodTray;
         public FoodHolder foodHolder;
@@ -36,6 +43,7 @@ namespace TableAndChair
         public bool staffArrived = false;
 
         public float time = 0f;
+        public float timeCheck = 0f;
 
         public event UnityAction<Table, TableStatus> OnTableStatusChanged;
         public event UnityAction<bool> OnStaffArrived;
@@ -43,25 +51,62 @@ namespace TableAndChair
         {
             chairManager = GetComponentInChildren<ChairManager>();
             foodHolder = GetComponentInChildren<FoodHolder>();
+            kimchi.SetActive(false);
+        }
+
+        private void OnEnable()
+        {
+            Save();
         }
 
         private void Update()
         {
             if (chairManager.AreAllCustomersSeated() && tableStatus == TableStatus.Reserved)
             {
+                timeCheck = 0f;
                 SetTableStatus(TableStatus.PendingToOrder);
+                orderIcon.SetActive(true);
+                SoundManager.Instance.PlaySfx(Sound.Order);
             }
             else if (tableStatus == TableStatus.FoodServed)
             {
-                if (time > 5f)
+                timeCheck = 0f;
+                if (time > 10f)
                 {
                     time = 0f;
                     SetTableStatus(TableStatus.PaymentRequested);
+                    moneyIcon.SetActive(true);
                 }
 
                 time += Time.deltaTime;
             }
+
+            if (tableStatus == TableStatus.PendingToOrder && hasStaff)
+            {
+                timeCheck += Time.deltaTime;
+                if (timeCheck >= 18f)
+                {
+                    timeCheck = 0f;
+                    SetHasStaff(false);
+                }
+            }
+            else if (tableStatus == TableStatus.PaymentRequested && hasStaff)
+            {
+                timeCheck += Time.deltaTime;
+                if (timeCheck >= 18f)
+                {
+                    timeCheck = 0f;
+                    SetHasStaff(false);
+                }
+            }
             
+            
+        }
+
+        public void SetupTable(Sprite tableSprite, Sprite rightChair, Sprite leftChair)
+        {
+            spriteRenderer.sprite = tableSprite;
+            chairManager.SetupChair(rightChair, leftChair);
         }
 
         public bool IsEmptyTable()
@@ -119,6 +164,7 @@ namespace TableAndChair
             {
                 foodHolder.holder[i].Setup(foodTray.foodList[i].sprite, foodTray.foodList[i].name);
             }
+            kimchi.SetActive(true);
         }
 
         public void RemoveFood()
@@ -127,6 +173,17 @@ namespace TableAndChair
             {
                 food.Setup(null, "FoodPoint");
             }
+            kimchi.SetActive(false);
+        }
+
+        private void Save()
+        {
+            ES3.Save(transform.name, transform);
+        }
+        
+        private void OnApplicationQuit()
+        {
+            Save();
         }
     }
 }

@@ -12,17 +12,23 @@ namespace Customers
         public override void Enter()
         {
             base.Enter();
-            customer.targetTable.OnTableStatusChanged += TargetTableOnOnTableStatusChanged;
+            customer.anim.SetBool(animBoolName, true);
         }
 
-        private void TargetTableOnOnTableStatusChanged(Table table, TableStatus status)
+        public override void LogicUpdate()
         {
-            if(customer.targetTable != table) return;
-            
-            if (status == TableStatus.PaymentRequested)
+            base.LogicUpdate();
+            if(isExitingState) return;
+            if (customer.targetTable != null && customer.targetTable.TableStatus == TableStatus.PaymentRequested)
             {
                 stateMachine.ChangeState(customer.SittingState);
             }
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            customer.anim.SetBool(animBoolName, false);
         }
     }
 }

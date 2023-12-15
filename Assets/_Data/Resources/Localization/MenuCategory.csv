@@ -1,0 +1,18 @@
+Key,English,Vietnamese,Korean
+Menu.Menu,Menu,Thực đơn,메뉴
+Menu.Description,Description,Mô tả,설명
+Menu.Price,Price: {0},Giá: {0},가격: {0}
+Bread.Name,Banh Mi,Bánh Mì,반미
+Bread.Description,"Banh Mi is a short baguette with thin, crisp crust and a soft, filled with savory ingredients like a sandwich...","Bánh Mì là một loại bánh mì ngắn với lớp vỏ mỏng, giòn và nhân mềm, chứa đầy các nguyên liệu thơm ngon như bánh sandwich...","반미는 길쭉한 프랑스식 빵에 향채, 오이, 절인 당근과 무에 계란후라이나 구운 돼지고기, 미트볼 등을 올려 달거나 매운 소스를 바른 간식용 또는 식사용 빵이다."
+BrokenRice.Name,Broken Rice,Cơm tấm,껌땀
+BrokenRice.Description,"Vietnamese Broken Rice is a type of white rice that is commonly served with many symbolic Vietnamese dishes such as grilled meat, egg and pickles...","Cơm tấm Việt Nam là loại cơm trắng thường được dùng kèm với nhiều món ăn mang tính biểu tượng của Việt Nam như thịt nướng, trứng và đồ chua...",베트남 깨진 쌀 은 많은 상징적인 베트남 요리와 함께 일반적으로 제공되는 밥의 한 가지입니다...
+Kimbap.Name,Kimbap,Cơm cuộn,김밥
+Kimbap.Description,"Kimbap is a Korean dish made from cooked rice, vegetables, fish and meat rolled in dried sheets of seaweed and served in bite-sized slices...","Cơm cuộn là một món ăn Hàn Quốc được làm từ cơm, rau, cá và thịt cuộn trong những tấm rong biển khô và được phục vụ thành từng lát vừa ăn...","김밥은 소금과 참기름으로 맛을 낸 밥을 시금치, 단무지, 당근, 달걀, 우엉, 햄, 맛살, 어묵 등 속재료를 넣고 김으로 말아서 한입 크기로 썰어 낸 음식이다."
+Kimchi.Name,Kimchi,Kim chi,김치
+Kimchi.Description,"Kimchi is a traditional Korean banchan consisting of salted and fermented vegetables, most commonly using cabbage or Korean radish...","Kim chi là một món ăn kèm truyền thống của Hàn Quốc bao gồm các loại rau củ muối lên men, phổ biến nhất là sử dụng bắp cải hoặc củ cải Hàn Quốc...","김치는 한국의 전통 발효식품이다. 소금에 절인 배추나, 무 등을 고춧가루, 파, 마늘 등의 양념에 버무린 뒤 발효시켜 만든다. 한국의 국민 음식 가운데 하나로 여겨진다."
+Pho.Name,Pho,Phở,퍼
+Pho.Description,"Pho is a Vietnamese soup dish consisting of broth, rice noodles, herbs, and meat (usually beef, sometimes chicken)...","Phở là một món ăn truyền thống của người Việt Nam bao gồm nước dùng, bánh phở, rau thơm và thịt (thường là thịt bò, đôi khi là thịt gà)...","퍼 는 베트남의 국수 요리이다. 쌀국수인 바인 퍼를 쇠고기나 닭고기 등으로 낸 육수에 말아 내는 음식으로, 베트남의 국민 음식 가운데 하나로 여겨진다."
+Tokbokki.Name,Tteokbokki,Bánh Gạo,떡볶이
+Tokbokki.Description,"Tteokbokki is a class of Korean rice cakes made with steamed flour made of various grains, including glutinous or non-glutinous rice...","Tteokbokki là một loại bánh gạo truyền thống của Hàn Quốc được làm bằng bột gạo, nặn thành sợi dài sau đó cắt thành từng khúc nhỏ vừa ăn...","떡볶이는 떡면(가는 가래떡)을 주재료로 하는 한국 요리이다. 일반적인 떡볶이는 밀떡, 쌀떡, 어묵, 채소, 고추장 등의 양념을 넣어 볶은 음식으로 한국의 대표적 길거리 음식이다."
+Bibimbap.Name,Bibimbap,Cơm trộn,비빔밥
+Bibimbap.Description,"The dish includes white rice combined with stir-fried vegetables and meat. There are also fried eggs, seaweed and Kimchi.","Món ăn bao gồm cơm trắng kết hợp với rau và thịt xào. Ngoài ra còn có trứng rán, rong biển cũng như Kimchi.","이 요리에는 볶은 야채와 고기와 함께 흰 쌀밥이 포함되어 있습니다. 계란후라이, 김, 김치도 있어요."

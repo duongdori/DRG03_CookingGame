@@ -19,7 +19,7 @@ namespace AssistantChefs
         {
             FoodTray foodTray = KitchenManager.Instance.GetFoodTray();
             if(foodTray == null) return;
-
+            
             AssistantChefBehaviour assistantChef = GetFreeAssistantChef();
             if(assistantChef == null) return;
             

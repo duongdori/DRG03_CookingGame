@@ -2,18 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace ObjectPooling
 {
-    public class ObjectPool : MonoBehaviour
+    [Serializable]
+    public class ObjectPool<T> where T : MonoBehaviour
     {
-        [SerializeField] private List<GameObject> objectPrefabs;
-        [SerializeField] private int poolSize;
-        [SerializeField] private List<GameObject> freeObjects = new();
-        [SerializeField] private List<GameObject> usedObjects = new();
+        public List<T> objectPrefabs;
+        public int poolSize;
+        public Transform parentHolder;
+        public List<T> freeObjects = new();
+        public List<T> usedObjects = new();
 
-        private void Awake()
+        public ObjectPool(List<T> prefabs, int size, Transform parent)
+        {
+            objectPrefabs = prefabs;
+            poolSize = size;
+            parentHolder = parent;
+        }
+        public void Setup()
         {
             for (int i = 0; i < poolSize; i++)
             {
@@ -21,9 +30,9 @@ namespace ObjectPooling
             }
         }
 
-        public GameObject GetObjectFromPool()
+        public T GetObjectFromPool()
         {
-            GameObject obj = freeObjects.FirstOrDefault(o => o.activeInHierarchy == false);
+            T obj = freeObjects.FirstOrDefault(o => o.gameObject.activeInHierarchy == false);
 
             if (obj == null)
             {
@@ -32,23 +41,23 @@ namespace ObjectPooling
 
             freeObjects.Remove(obj);
             usedObjects.Add(obj);
-            obj.SetActive(true);
+            obj.gameObject.SetActive(true);
             return obj;
         }
 
-        public void ReturnObjectToPool(GameObject obj)
+        public void ReturnObjectToPool(T obj)
         {
             usedObjects.Remove(obj);
             freeObjects.Add(obj);
-            obj.SetActive(false);
+            obj.gameObject.SetActive(false);
         }
 
-        private GameObject GenerateNewObject()
+        private T GenerateNewObject()
         {
             int randomNum = Random.Range(0, objectPrefabs.Count);
             
-            GameObject newObject = Instantiate(objectPrefabs[randomNum], transform);
-            newObject.SetActive(false);
+            T newObject = Object.Instantiate(objectPrefabs[randomNum], parentHolder);
+            newObject.gameObject.SetActive(false);
             freeObjects.Add(newObject);
 
             return newObject;

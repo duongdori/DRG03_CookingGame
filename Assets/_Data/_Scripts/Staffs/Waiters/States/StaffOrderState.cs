@@ -19,6 +19,7 @@ namespace Staffs
             cook.SetTargetTable(staff.targetTable);
             staff.targetTable.SetCook(cook);
             
+            staff.targetTable.orderIcon.SetActive(false);
             staff.targetTable.SetStaffArrived(true);
             staff.targetTable.SetTableStatus(TableStatus.Ordering);
         }

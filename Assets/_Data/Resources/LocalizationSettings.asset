@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63817d93022759543b57e795c78efe11, type: 3}
+  m_Name: LocalizationSettings
+  m_EditorClassIdentifier: 
+  TableId: 1JwuUBDluZXs1XWeLqiRdMohPqQp9Ss_canltSNTM3SU
+  Sheets:
+  - Name: Menu
+    Id: 0
+    TextAsset: {fileID: 4900000, guid: 1701d78a7cbbdfe4290712aeb4be0ad1, type: 3}
+  - Name: Setting
+    Id: 1822933012
+    TextAsset: {fileID: 4900000, guid: fb08663f09ebd4e41807e0a1a2391a99, type: 3}
+  - Name: ShopCategory
+    Id: 1135590255
+    TextAsset: {fileID: 4900000, guid: 7c29ef04aba82f24e836329699269ec3, type: 3}
+  - Name: StaffCategory
+    Id: 1601008940
+    TextAsset: {fileID: 4900000, guid: 9f813c19909c2744b9ab0dd9e85f4aa8, type: 3}
+  - Name: MenuCategory
+    Id: 1142457846
+    TextAsset: {fileID: 4900000, guid: 5e7f1800e5f90624ca160953564aaaa3, type: 3}
+  - Name: Introduce
+    Id: 1374482629
+    TextAsset: {fileID: 4900000, guid: 22b2d67085fb1004dbb2a317254709bd, type: 3}
+  - Name: EnterName
+    Id: 1238730101
+    TextAsset: {fileID: 4900000, guid: 9b4ddc943a6c719468e299547fa5f978, type: 3}
+  SaveFolder: {fileID: 102900000, guid: 7de9f0ebc1915cd49b87fe07521660df, type: 3}

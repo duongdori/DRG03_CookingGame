@@ -1,6 +1,8 @@
-﻿using Pathfinding;
+﻿using System;
+using Pathfinding;
 using TableAndChair;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Staffs
 {
@@ -35,6 +37,11 @@ namespace Staffs
             MoveState = new StaffMoveState(StateMachine, "Move", this);
             OrderState = new StaffOrderState(StateMachine, "Order", this);
             BillingState = new StaffBillingState(StateMachine, "Billing", this);
+        }
+
+        private void OnEnable()
+        {
+            Save();
         }
 
         protected override void Start()
@@ -73,6 +80,15 @@ namespace Staffs
         public void SetIsFree(bool value)
         {
             isFree = value;
+        }
+
+        private void Save()
+        {
+            ES3.Save(transform.name, transform);
+        }
+        private void OnApplicationQuit()
+        {
+            Save();
         }
 
         #region LoadComponents

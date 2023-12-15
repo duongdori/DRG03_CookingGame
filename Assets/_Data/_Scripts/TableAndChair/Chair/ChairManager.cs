@@ -4,12 +4,14 @@ using UnityEngine;
 
 namespace TableAndChair
 {
-    public class ChairManager : MonoBehaviour
+    public class ChairManager : MyMonobehaviour
     {
         [SerializeField] private List<Chair> chairs = new();
 
-        private void Awake()
+        protected override void LoadComponents()
         {
+            base.LoadComponents();
+            if(chairs.Count > 0) return;
             if(transform.childCount <= 0) return;
             chairs.Clear();
             foreach (Transform child in transform)
@@ -17,6 +19,12 @@ namespace TableAndChair
                 if (!child.TryGetComponent(out Chair chair)) continue;
                 chairs.Add(chair);
             }
+        }
+
+        public void SetupChair(Sprite rightChair, Sprite leftChair)
+        {
+            chairs[0].spriteRenderer.sprite = leftChair;
+            chairs[1].spriteRenderer.sprite = rightChair;
         }
 
         public bool IsEmptyChairs()

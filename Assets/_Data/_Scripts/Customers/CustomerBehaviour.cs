@@ -78,7 +78,7 @@ namespace Customers
         private void LoadAnimator()
         {
             if(anim != null) return;
-            anim = GetComponentInChildren<Animator>();
+            anim = transform.GetChild(1).GetComponent<Animator>();
             Debug.LogWarning(transform.name + ": LoadAnimator", gameObject);
         }
         private void LoadAIPath()

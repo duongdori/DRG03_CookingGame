@@ -25,7 +25,7 @@ namespace Customers
             }
             else
             {
-                customer.customerHolder.ReturnCustomerToPool(customer.gameObject);
+                customer.customerHolder.ReturnCustomerToPool(customer);
             }
         }
     }

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a856474ec4f2bc84c8c270f1eb20225f, type: 3}
+  m_Name: Kimbap
+  m_EditorClassIdentifier: 
+  id: 4
+  name: Kimbap
+  sprite: {fileID: 21300000, guid: 6d1c509fc23a2964e913179fd37f4b72, type: 3}
+  prefab: {fileID: 1328265207410542352, guid: cdc96d4d131ef654e99b7bcb17185950, type: 3}
+  preparationTime: 5
+  price: 30

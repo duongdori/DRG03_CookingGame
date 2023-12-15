@@ -7,12 +7,35 @@ namespace Staffs
 {
     public class StaffHolder : MyMonobehaviour
     {
+        public static StaffHolder Instance { get; private set; }
+        
         [SerializeField] private List<StaffBehaviour> staffs = new();
+
+        protected override void Awake()
+        {
+            base.Awake();
+            if (Instance == null) Instance = this;
+
+            if (ES3.FileExists(ES3Settings.defaultSettings))
+            {
+                foreach (Transform child in transform)
+                {
+                    if (ES3.KeyExists(child.name))
+                    {
+                        child.gameObject.SetActive(true);
+                        if (child.TryGetComponent(out StaffBehaviour newStaff))
+                        {
+                            staffs.Add(newStaff);
+                        }
+                    }
+                }
+            }
+        }
 
         protected override void LoadComponents()
         {
             base.LoadComponents();
-            LoadStaffs();
+            // LoadStaffs();
         }
 
         private void Update()
@@ -40,6 +63,26 @@ namespace Staffs
             return staffs.FirstOrDefault(s => s.IsFreeStaff());
         }
 
+        public StaffBehaviour GetNewStaff()
+        {
+            if (transform.childCount == 0) return null;
+            
+            foreach (Transform child in transform)
+            {
+                if (!child.gameObject.activeSelf)
+                {
+                    child.gameObject.SetActive(true);
+                    if (child.TryGetComponent(out StaffBehaviour newStaff))
+                    {
+                        staffs.Add(newStaff);
+                        return newStaff;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         private void LoadStaffs()
         {
             if(staffs.Count > 0 || transform.childCount == 0) return;
@@ -48,7 +91,10 @@ namespace Staffs
             foreach (Transform child in transform)
             {
                 if (!child.TryGetComponent(out StaffBehaviour staff)) continue;
-                staffs.Add(staff);
+                if (child.gameObject.activeSelf)
+                {
+                    staffs.Add(staff);
+                }
             }
             
             Debug.LogWarning(transform.name + ": LoadStaffs", gameObject);

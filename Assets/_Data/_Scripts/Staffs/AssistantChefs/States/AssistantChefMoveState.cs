@@ -19,19 +19,11 @@ namespace AssistantChefs
         {
             base.LogicUpdate();
 
-            if (assistantChef.aiPath.reachedDestination && assistantChef.foodTray != null)
+            if (assistantChef.aiPath.reachedDestination && assistantChef.targetTable != null)
             {
-                assistantChef.modelHasFood.SetActive(false);
-                assistantChef.modelNoFood.SetActive(true);
-                
-                assistantChef.targetTable.foodTray = assistantChef.foodTray;
-                assistantChef.targetTable.SetupFood();
-                assistantChef.targetTable.SetTableStatus(TableStatus.FoodServed);
-                assistantChef.foodTray = null;
-                assistantChef.targetTransform = assistantChef.idlePoint;
-                stateMachine.ChangeState(assistantChef.IdleState);
+                stateMachine.ChangeState(assistantChef.DeliveryState);
             }
-            else if (assistantChef.aiPath.reachedDestination && assistantChef.foodTray == null)
+            else if (assistantChef.aiPath.reachedDestination && assistantChef.targetTable == null)
             {
                 assistantChef.modelHasFood.SetActive(true);
                 assistantChef.modelNoFood.SetActive(false);

@@ -17,23 +17,22 @@ namespace Customers
             customer.transform.localScale = customer.targetChair.sitPoint.localScale;
             customer.normalModel.SetActive(false);
             customer.sitModel.SetActive(true);
-            
-            customer.targetTable.OnTableStatusChanged += TargetTableOnOnTableStatusChanged;
+            customer.anim.SetBool(animBoolName, true);
         }
 
-        private void TargetTableOnOnTableStatusChanged(Table table, TableStatus status)
+        public override void LogicUpdate()
         {
-            if(customer.targetTable != table) return;
-
-            if (status == TableStatus.Ordering)
+            base.LogicUpdate();
+            if(isExitingState) return;
+            if (customer.targetTable != null && customer.targetTable.TableStatus == TableStatus.Ordering)
             {
                 stateMachine.ChangeState(customer.OrderingState);
             }
-            else if (status == TableStatus.FoodServed)
+            else if (customer.targetTable != null && customer.targetTable.TableStatus == TableStatus.FoodServed)
             {
                 stateMachine.ChangeState(customer.EatingState);
             }
-            else if (status == TableStatus.Empty)
+            else if (customer.targetTable != null && customer.targetTable.TableStatus == TableStatus.Empty)
             {
                 customer.targetChair.SetChairStatus(ChairStatus.Empty);
                 customer.targetChair = null;
@@ -42,6 +41,12 @@ namespace Customers
                 customer.aiPath.enabled = true;
                 stateMachine.ChangeState(customer.IdleState);
             }
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            customer.anim.SetBool(animBoolName, false);
         }
     }
 }
